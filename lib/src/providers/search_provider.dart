@@ -58,6 +58,7 @@ class SearchProvider extends LoadingErrorProvider {
 
   //
   Future<void> doSearching() async {
+    changeError(null);
     _searchState = SearchState.SEARCHING;
     _matchingInfo = null;
     notifyListeners();
