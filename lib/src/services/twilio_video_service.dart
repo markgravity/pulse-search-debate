@@ -13,6 +13,6 @@ class DefaultTwilioVideoService implements TwilioVideoService {
     final random = Random();
     final duration = Duration(milliseconds: random.nextInt(2000));
     await Future.delayed(duration);
-    if (random.nextBool()) throw ResponseError("Failed to connect to room");
+    if (true) throw ResponseError("Failed to connect to room");
   }
 }

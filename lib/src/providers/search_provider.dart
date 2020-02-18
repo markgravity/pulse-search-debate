@@ -104,6 +104,7 @@ class SearchProvider extends LoadingErrorProvider {
     } catch (e) {
       if (e is ResponseError) {
         changeError(ResponseError('Somrthing wrong. T___T'));
+        notifyListeners();
         return;
       }
 
