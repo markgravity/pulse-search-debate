@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pulse_search/src/providers/helpers.dart';
 import 'package:pulse_search/src/providers/search_provider.dart';
-import 'package:pulse_search/src/screens/provider/error_dialog.dart';
+import 'package:pulse_search/src/screens/provider/error_dialog_and_navigation.dart';
+
+import 'provider_listener.dart';
 
 class Screen extends StatefulWidget {
   @override
@@ -23,26 +25,29 @@ class ScreenState extends State<Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            _buildAvatar(),
-            const SizedBox(
-              height: 20,
-            ),
-            _buildHintText(),
-            const SizedBox(
-              height: 20,
-            ),
-            CircularProgressIndicator(),
-            const SizedBox(
-              height: 20,
-            ),
-            _buildButtons(),
-            _buildErrorDialogAndNavigation(),
-          ],
+      key: Key('search_screen'),
+      body: ProviderListener(
+        listenWidget: _buildErrorDialogAndNavigation(),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              _buildAvatar(),
+              const SizedBox(
+                height: 20,
+              ),
+              _buildHintText(),
+              const SizedBox(
+                height: 20,
+              ),
+              CircularProgressIndicator(),
+              const SizedBox(
+                height: 20,
+              ),
+              _buildButtons(),
+            ],
+          ),
         ),
       ),
     );
@@ -147,7 +152,7 @@ class ScreenState extends State<Screen> {
       selector: (_, provider) =>
           [provider.error, provider.doSearching, provider.searchState],
       builder: (_, data, __) {
-        return ErrorDialog(
+        return ErrorDialogAndNavigation(
           error: data[0],
           backFunction: data[1],
           searchState: data[2],
